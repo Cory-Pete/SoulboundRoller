@@ -1,0 +1,115 @@
+<input type="button" id="Generate Weapon" value="Generate Weapon" onclick= "GenerateWeapon();" />
+<p id="Output"></p>
+<script>
+
+//main code for generating weapon, only function, and it is called by the button 
+function GenerateWeapon() {
+//the arrays for storing all of the words used in generation of Weapons (coutesy hacker Andrew)
+var weapons = new Array("Longsword", "Shortsword", "Thrusting Sword", "Curved Sword",
+"Eastern Sword", "Bastrd Sword", "Greatsword", "Shotel", "Kukri", "Khopesh", "Hook Sword", "Zweihander", "Poleax", "Halberd", "Bardiche", "Spontoon", "Short Spear", "Quarterstaff", "Lance", "Javelin", "Polehammer", "Naginata", "Trident", 
+"Bludgeon", "One-Handed Mace", "Two-Handed Mace", "Flail", "Hammer", "Greathammer",
+"Warpick", "Tomahawk", "Hand Axe", "Two-Handed Axe", "Greataxe", "Flintlock", "Derringer", "Revolver", "Handgun", "Hand Cannon", "Machine Pistol", "Sub-Machine Gun", "Blunderbuss", "Sawed-Off Shotgun", "Manual-Action Shotgun", "Semi-Automatic Shotgun",
+"Full-Auto Shotgun", "Automatic Rifle", "Light Machine Gun", "Muzzleloader",
+"Semi-Automatic Rifle", "Manual-Action Rifle", "High-Cal Rifle",
+"Culverin", "Dagger", "Push Dagger", "Punching Dagger", "Curved Dagger", "Shiv", "Kama", "Buckler", "Heater Shield", "Kite Shield", "Tower Shield", "Sai", "Parrying Dagger", "Gauntlet", "Shortbow", "Compound Bow",
+"Longbow", "Great Bow", "Light Crossbow", "Repeating Crossbow", "Atlatl", "Bola", "Slingshot",
+"Metal Claw", "Ulu", "Tonfa", "Chakram", "Rock", "Pillar", "Pickaxe", "Scythe", "Bladed Fan", "Caltrops", "Shuriken", "Throwing Knife", "Darts", "Blowgun", "Caestus", "Brass Knuckles", "Patta", "Boomerang", "Twinblade",
+"Walking Cane", "Macuahuitl", "Chain", "Whip", "Nunchuku");
+
+var build = new Array("Single", "Combo", "Paired");
+var perk = new Array("Great", "Collapsable", "Akimbo");
+var corruptions = new Array("Ruin", "Decay", "Sorcery", "Slaughter", "Vanity", "Madness");
+
+var ruin = new Array("Super Heated", "Flame Imbued", "Explosive", "Smoke Shifting",
+"Magnetic", "Devastating", "Pinning", "Silver Earning", "Damning", "Breaching");
+
+var decay = new Array("Entangling", "Corroding", "Festering", "Moss Growing", "Bone Spiked", 
+"Minion Conjuring", "Death Speaking", "Shapeshifting", "Tethering", "Fern Growing");
+
+var sorcery = new Array("Moon Catching", "Voodoo", "Soul Capturing", "Poisoned", "Frost Imbued", "Arcane Imbued", 
+"Interdimensional", "Bridging", "Companion Worthy", "Phantom");
+
+var slaughter = new Array("Ranged", "Animated", "Blood Thirsty", "Ever Sharp", "Sanguine", 
+"Symbiotic", "Form Shifting", "Relocating", "Supply Giving", "Furious");
+
+var vanity = new Array("Blinding", "Restorative", "Inquisitorial", "Protective", 
+"Wind Imbued", "Petrifying", "Duplicating", "Sensing", "Time Shifting", "Winged");
+
+var madness = new Array("Lightning Imbued", "Insane", "Talking", "Malevolent", 
+"Possessive", "Thought Stealing", "Guiding", "Chaotic", "Seeing", "Disguising");
+
+var corrupNum = Math.floor(Math.random() * 6);
+var powNum = Math.floor(Math.random() * 10);
+
+//first switch statement gives the weaopon its power
+switch(corrupNum){
+case 0:
+var Output = (ruin[powNum] + " ");
+break;
+
+case 1:
+var Output = (decay[powNum] + " ");
+break;
+
+case 2:
+var Output = (sorcery[powNum] + " ");
+break;
+
+case 3:
+var Output = (slaughter[powNum] + " ");
+break;
+
+case 4:
+var Output = (vanity[powNum] + " ");
+break;
+
+default:
+var Output = (madness[powNum] + " ");
+break;
+
+}
+
+var weapNum = Math.floor(Math.random() * 100);
+
+//second switch generates the rest of the weapon
+switch(Math.floor(Math.random() * 3)) {
+    case 0:
+        var perkNum = Math.floor(Math.random() * 3);
+        Output += (perk[perkNum] + " ");
+        	if(perkNum == 2  && weapNum != 85 && weapNum != 86 && weapNum != 87 && weapNum != 88){
+				Output +=(weapons[weapNum] + "s");
+            }
+            else{
+        		Output += (weapons[weapNum]);
+       		}
+        break;
+        
+    case 1:
+    	weapNum2 = Math.floor(Math.random() * 100);
+        	while(weapNum2 == weapNum){
+            	weapNum2 = Math.floor(Math.random() * 100);
+            }
+        if(weapNum2 != 85 && weapNum2 != 86 && weapNum2 != 87 && weapNum2 != 88){
+    		Output += (weapons[weapNum] + " combined with a " + weapons[weapNum2]);
+        }
+        else{
+        	Output += (weapons[weapNum] + " combined with " + weapons[weapNum2]);
+        }
+        break;
+        
+    default:
+    	weapNum2 = Math.floor(Math.random() * 100);
+        	while(weapNum2 == weapNum){
+            	weapNum2 = Math.floor(Math.random() * 100);
+            }
+        if(weapNum2 != 85 && weapNum2 != 86 && weapNum2 != 87 && weapNum2 != 88){
+    		Output += (weapons[weapNum] + " paired alongside a " + weapons[weapNum2]);
+        }
+        else{
+        	Output += (weapons[weapNum] + " paired alongside " + weapons[weapNum2]);
+        }
+        break;
+}
+document.getElementById("Output").innerHTML=Output;
+}
+</script>
