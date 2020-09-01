@@ -208,7 +208,9 @@ function GenerateWeapon() {
         let corrupNum2 = generateNumber(6);
         let powNum2 = generateNumber(6);
           while (corrupNum == corrupNum2 && powNum == powNum2) {
-            findPower(generateNumber(6), generateNumber(6), 2);
+            corrupNum2 = generateNumber(6);
+            powNum2 = generateNumber(6);
+            findPower(corrupNum2, powNum2, 2);
           }
         findPower(corrupNum2, powNum2, 2);
         Output += (weapons[weapNum].name);
