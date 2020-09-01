@@ -1,4 +1,5 @@
 let imageContainer = document.getElementById('image-container');
+let textContainer = document.getElementById('text-container');
   //main code for generating weapon, only function, and it is called by the button
 
 function GenerateWeapon() {
@@ -113,18 +114,24 @@ function GenerateWeapon() {
   const vanity = ["Alchemic", "Blinding", "Divine", "Petrifying", "Shielding", "Wind Imbued"];
   const madness = ["Insane", "Lightning Imbued", "Prophetic", "Possessive", "Talking", "Thought Stealing"];
   const corruptions = [ruin, decay, sorcery, slaughter, vanity, madness];
-  let divImageContainer = document.getElementById('image-container')
   let weaponImage = document.createElement('img');
   let weaponImage2 = document.createElement('img');
+  let powerImage = document.createElement('img');
+  let powerImage2 = document.createElement('img');
   let weapNum = 0;
   let weapNum2 = 0;
 
   //checks to see if previous weapon generation is still there and removes it
-  if (divImageContainer.hasChildNodes()) {
+  if (imageContainer.hasChildNodes()) {
    do {
-    divImageContainer.removeChild(divImageContainer.childNodes[0]);
-    } while (divImageContainer.hasChildNodes());
+    imageContainer.removeChild(imageContainer.childNodes[0]);
+    } while (imageContainer.hasChildNodes());
   };
+  if (textContainer.hasChildNodes()) {
+    do {
+      textContainer.removeChild(textContainer.childNodes[0]);
+    } while (textContainer.hasChildNodes());
+  }
 
   function generateNumber (maxNum) {
     return Math.floor(Math.random() * maxNum)
@@ -136,10 +143,22 @@ function GenerateWeapon() {
   let weaponStats2 = '';
   let Output = '';
 
-  //finds and determines the power for the weapon
-  function findPower (corrupNumber, powerNumber) {
+  //generates and determines the power for the weapon
+  function findPower (corrupNumber, powerNumber, position) {
     let corrupType = corruptions[corrupNumber];
     Output += (corrupType[powerNumber] + " ");
+    if (position == 1) {
+      powerImage.classList.add('power-image');
+      powerImage.src = `images/powers/${corrupType[powerNumber]}.png`;
+      powerImage.style.cssText = 'height: 100px; width: 100px;'
+      imageContainer.appendChild(powerImage);
+    }
+    else if (position == 2) {
+      powerImage2.classList.add('power-image');
+      powerImage2.src = `images/powers/${corrupType[powerNumber]}.png`;
+      powerImage2.style.cssText = 'height: 100px; width: 100px;'
+      imageContainer.appendChild(powerImage2);
+    }
   }
 
   weapNum = generateNumber(100);
@@ -156,93 +175,68 @@ function GenerateWeapon() {
     weaponStats.classList.add('weapon-stats');
     weaponStats.textContent = `${weapons[weapNum].name} | Attack: ${weapons[weapNum].Attack} Defense: ${weapons[weapNum].Defense}
                 Recovery: ${weapons[weapNum].Recover} | Traits: ${weapons[weapNum].Traits} |  Damage Type: ${weapons[weapNum].Type}`
-    imageContainer.appendChild(weaponStats);
+    textContainer.appendChild(weaponStats);
 
     if (weaponAttribute == "Combo" || weaponAttribute == "Paired") {
         weaponStats2 = document.createElement('p');
         weaponStats2.classList.add('weapon-stats');
         weaponStats2.textContent = `${weapons[weapNum2].name} | Attack: ${weapons[weapNum2].Attack} Defense: ${weapons[weapNum2].Defense}
                     Recovery: ${weapons[weapNum2].Recover} | Traits: ${weapons[weapNum2].Traits} |  Damage Type: ${weapons[weapNum2].Type}`
-        imageContainer.appendChild(weaponStats2);
+        textContainer.appendChild(weaponStats2);
+    }
+  }
+
+  function appendWeaponImages () {
+    //adds the weapon image then stats to the DOM
+    weaponImage.classList.add('weapon-image');
+    weaponImage.src = `images/weapons/${weapons[weapNum].name}.png`;
+    weaponImage.style.cssText = 'max-height: 200px; max-width: 300px;'
+    imageContainer.appendChild(weaponImage);
+
+    //secondary weapon info if available
+    if(weapNum2) {
+      weaponImage2.classList.add('weapon-image');
+      weaponImage2.src = `images/weapons/${weapons[weapNum2].name}.png`;
+      weaponImage2.style.cssText = 'max-height: 200px; max-width: 300px;'
+      imageContainer.appendChild(weaponImage2);
     }
   }
 
   function buildWeapon () {
     if (weaponAttribute == "Single") {
-        findPower(corrupNum, powNum);
+        findPower(corrupNum, powNum, 1);
         let corrupNum2 = generateNumber(6);
         let powNum2 = generateNumber(6);
-        findPower(corrupNum2, powNum2);
+          while (corrupNum == corrupNum2 && powNum == powNum2) {
+            findPower(generateNumber(6), generateNumber(6), 2);
+          }
+        findPower(corrupNum2, powNum2, 2);
         Output += (weapons[weapNum].name);
-          appendWeaponStats();
       }
     else if (weaponAttribute == "Combo") {
-        findPower(corrupNum, powNum);
+        findPower(corrupNum, powNum, 1);
         weapNum2 = generateNumber(100);
             while(weapNum2 == weapNum) {
                 weapNum2 = generateNumber(100);
               }
         Output += (weapons[weapNum].name + " combined with " + weapons[weapNum2].name);
-        appendWeaponStats();
       }
     else if (weaponAttribute == "Paired") {
-        findPower(corrupNum, powNum);
+        findPower(corrupNum, powNum, 1);
         weapNum2 = Math.floor(Math.random() * 100);
             while(weapNum2 == weapNum){
                 weapNum2 = Math.floor(Math.random() * 100);
               }
         Output += (weapons[weapNum].name + " paired alongside " + weapons[weapNum2].name);
-        appendWeaponStats();
       }
+    appendWeaponStats();
+    appendWeaponImages();
   }
 
   buildWeapon();
 
 
 
-  //switch determines the loadout type and generates the weapon(s)
-  /*switch(Math.floor(Math.random() * 3)) {
-      case 0:
-            findPower(corrupNum, powNum);
-            let corrupNum2 = generateNumber(6);
-            let powNum2 = generateNumber(6);
-            findPower(corrupNum2, powNum2);
-            Output += (weapons[weapNum].name);
-              appendWeaponStats();
-            break;
-
-      case 1:
-            findPower(corrupNum, powNum);
-          	weapNum2 = generateNumber(100);
-              	while(weapNum2 == weapNum){
-                  	weapNum2 = generateNumber(100);
-                  }
-            Output += (weapons[weapNum].name + " combined with " + weapons[weapNum2].name);
-            appendWeaponStats();
-              break;
-
-      default:
-              findPower(corrupNum, powNum);
-            	weapNum2 = Math.floor(Math.random() * 100);
-                	while(weapNum2 == weapNum){
-                    	weapNum2 = Math.floor(Math.random() * 100);
-                    }
-              Output += (weapons[weapNum].name + " paired alongside " + weapons[weapNum2].name);
-              appendWeaponStats();
-                break;
-        }*/
 
   document.getElementById("Output").innerHTML=Output;
-
-  //adds the weapon image then stats to the DOM
-  weaponImage.classList.add('weapon-image');
-  weaponImage.src = `images/weapons/${weapons[weapNum].name}.png`;
-  imageContainer.appendChild(weaponImage);
-
-  //secondary weapon info if available
-  if(weapNum2) {
-    weaponImage2.classList.add('weapon-image');
-    weaponImage2.src = `images/weapons/${weapons[weapNum2].name}.png`;
-    imageContainer.appendChild(weaponImage2);
-  }
 }
