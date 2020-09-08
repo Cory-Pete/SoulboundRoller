@@ -150,13 +150,13 @@ function GenerateWeapon() {
     if (position == 1) {
       powerImage.classList.add('power-image');
       powerImage.src = `images/powers/${corrupType[powerNumber]}.png`;
-      powerImage.style.cssText = 'height: 100px; width: 100px;'
+      powerImage.style.cssText = 'height: 100px; width: 100px; margin: 0 2px 0 2px;'
       imageContainer.appendChild(powerImage);
     }
     else if (position == 2) {
       powerImage2.classList.add('power-image');
       powerImage2.src = `images/powers/${corrupType[powerNumber]}.png`;
-      powerImage2.style.cssText = 'height: 100px; width: 100px;'
+      powerImage2.style.cssText = 'height: 100px; width: 100px; margin: 0 2px 0 2px;'
       imageContainer.appendChild(powerImage2);
     }
   }
@@ -190,14 +190,14 @@ function GenerateWeapon() {
     //adds the weapon image then stats to the DOM
     weaponImage.classList.add('weapon-image');
     weaponImage.src = `images/weapons/${weapons[weapNum].name}.png`;
-    weaponImage.style.cssText = 'max-height: 200px; max-width: 300px;'
+    weaponImage.style.cssText = 'height: auto; width: auto; max-height: 100px; max-width: 300px; margin: 0 2px 0 2px;'
     imageContainer.appendChild(weaponImage);
 
     //secondary weapon info if available
     if(weapNum2) {
       weaponImage2.classList.add('weapon-image');
       weaponImage2.src = `images/weapons/${weapons[weapNum2].name}.png`;
-      weaponImage2.style.cssText = 'max-height: 200px; max-width: 300px;'
+      weaponImage2.style.cssText = 'height: auto; width: auto; max-height: 100px; max-width: 300px; margin: 0 2px 0 2px;'
       imageContainer.appendChild(weaponImage2);
     }
   }

@@ -1,0 +1,19 @@
+#generate-weapon {
+  font-family: "Kufam";
+  font-size: 110%;
+  color: white;
+  text-shadow: 0 1px 1px (0, 0, 0, 0.1);
+  border: none;
+  border-radius: 4px;
+  padding: 18px 40px;
+  background: rgba(28, 230, 89, 0.8);
+}
+
+#generate-weapon:hover {
+  color: #f1f1f1;
+  background: rgba(27, 220, 85, 0.8);
+}
+
+#Output {
+  font-family: "Kufam";
+}
