@@ -1,10 +1,16 @@
+/*
+Developed by: Marcus Nelson
+Email: retiredpedestrian@protonmail.com
+Twitter: https://twitter.com/pedestrianite
+*/
+
 let imageContainer = document.getElementById('image-container');
 let textContainer = document.getElementById('text-container');
   //main code for generating weapon, only function, and it is called by the button
 
 function GenerateWeapon() {
 
-  //the arrays for storing all of the words used in generation of Weapons (coutesy hacker Andrew)
+  //an array of objects pertaining to the potential weapon types and their stats
   const weapons = [{name: 'Longsword', Attack: '+1', Defense: '+1', Recover: '-1', Traits: 'Combo 2', Type: 'S/P'},
                    {name: 'Shortsword', Attack: '+1', Defense: '0', Recover: '0', Traits: 'Combo 2, Parry', Type: 'S/P'},
                    {name: 'Rapier', Attack: '0', Defense: '+1', Recover: '0', Traits: 'Combo 3, Parry', Type: 'P'},
@@ -105,6 +111,7 @@ function GenerateWeapon() {
                    {name: 'Light Machine Gun', Attack: '+3', Defense: '0', Recover: '-2', Traits: 'Ammo 30, Firearm, Full Auto 3, Range M', Type: 'P'},
                    {name: 'High-Caliber Rifle', Attack: '+4', Defense: '0', Recover: '-3', Traits: 'Ammo 1, Firearm, Penetration, Range L', Type: 'P'},
                    {name: 'Culverin', Attack: '+5', Defense: '0', Recover: '-4', Traits: 'Ammo 1, Firearm, Penetration, Range M', Type: 'P'}]
+  //library of arrays and generates the random numbers
   const build = ["Single", "Combo", "Paired"];
   const perk = ["Great", "Collapsable", "Akimbo"];
   const ruin = ["Breaching", "Devastating", "Explosive", "Flame Imbued", "Superheated", "Volcanic"];
@@ -120,8 +127,13 @@ function GenerateWeapon() {
   let powerImage2 = document.createElement('img');
   let weapNum = 0;
   let weapNum2 = 0;
+  weapNum = generateNumber(100);
+  let corrupNum = generateNumber(6);
+  let powNum = generateNumber(6);
+  let weaponStats2 = '';
+  let Output = '';
 
-  //checks to see if previous weapon generation is still there and removes it
+  //checks to see if previous weapon generation images are still there and removes them
   if (imageContainer.hasChildNodes()) {
    do {
     imageContainer.removeChild(imageContainer.childNodes[0]);
@@ -138,30 +150,24 @@ function GenerateWeapon() {
   }
 
 
-  let corrupNum = generateNumber(6);
-  let powNum = generateNumber(6);
-  let weaponStats2 = '';
-  let Output = '';
 
-  //generates and determines the power for the weapon
   function findPower (corrupNumber, powerNumber, position) {
     let corrupType = corruptions[corrupNumber];
     Output += (corrupType[powerNumber] + " ");
     if (position == 1) {
       powerImage.classList.add('power-image');
       powerImage.src = `images/powers/${corrupType[powerNumber]}.png`;
-      powerImage.style.cssText = 'height: 100px; width: 100px; margin: 0 2px 0 2px;'
+      powerImage.style.cssText = 'height: 100px; width: 100px;'
       imageContainer.appendChild(powerImage);
     }
     else if (position == 2) {
       powerImage2.classList.add('power-image');
       powerImage2.src = `images/powers/${corrupType[powerNumber]}.png`;
-      powerImage2.style.cssText = 'height: 100px; width: 100px; margin: 0 2px 0 2px;'
+      powerImage2.style.cssText = 'height: 100px; width: 100px;'
       imageContainer.appendChild(powerImage2);
     }
   }
 
-  weapNum = generateNumber(100);
 
 
   function determineWeaponAttribute () {
@@ -184,20 +190,24 @@ function GenerateWeapon() {
                     Recovery: ${weapons[weapNum2].Recover} | Traits: ${weapons[weapNum2].Traits} |  Damage Type: ${weapons[weapNum2].Type}`
         textContainer.appendChild(weaponStats2);
     }
+    else {
+      weaponStats2 = document.createElement('br');
+      textContainer.appendChild(weaponStats2)
+    }
   }
 
   function appendWeaponImages () {
     //adds the weapon image then stats to the DOM
     weaponImage.classList.add('weapon-image');
     weaponImage.src = `images/weapons/${weapons[weapNum].name}.png`;
-    weaponImage.style.cssText = 'height: auto; width: auto; max-height: 100px; max-width: 300px; margin: 0 2px 0 2px;'
+    weaponImage.style.cssText = 'height: auto; width: auto; max-height: 100px; max-width: 300px;'
     imageContainer.appendChild(weaponImage);
 
     //secondary weapon info if available
     if(weapNum2) {
       weaponImage2.classList.add('weapon-image');
       weaponImage2.src = `images/weapons/${weapons[weapNum2].name}.png`;
-      weaponImage2.style.cssText = 'height: auto; width: auto; max-height: 100px; max-width: 300px; margin: 0 2px 0 2px;'
+      weaponImage2.style.cssText = 'height: auto; width: auto; max-height: 100px; max-width: 300px;'
       imageContainer.appendChild(weaponImage2);
     }
   }
@@ -236,8 +246,6 @@ function GenerateWeapon() {
   }
 
   buildWeapon();
-
-
 
 
   document.getElementById("Output").innerHTML=Output;
