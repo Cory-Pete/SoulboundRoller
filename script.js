@@ -125,8 +125,8 @@ function GenerateWeapon() {
   let weaponImage2 = document.createElement('img');
   let powerImage = document.createElement('img');
   let powerImage2 = document.createElement('img');
-  let weapNum = 0;
-  let weapNum2 = 0;
+  let weapNum = '';
+  let weapNum2 = '';
   weapNum = generateNumber(100);
   let corrupNum = generateNumber(6);
   let powNum = generateNumber(6);
@@ -204,7 +204,7 @@ function GenerateWeapon() {
     imageContainer.appendChild(weaponImage);
 
     //secondary weapon info if available
-    if(weapNum2) {
+    if(weaponAttribute == "Combo" || weaponAttribute == "Paired") {
       weaponImage2.classList.add('weapon-image');
       weaponImage2.src = `images/weapons/${weapons[weapNum2].name}.png`;
       weaponImage2.style.cssText = 'height: auto; width: auto; max-height: 100px; max-width: 300px;'
